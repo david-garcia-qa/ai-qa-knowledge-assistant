@@ -1,8 +1,11 @@
-python-dotenv
-langchain
-langchain-community
-langchain-openai
-chromadb
+python-dotenv==1.0.1
+openai==1.56.0
 tiktoken
-openai
 streamlit
+
+langchain==0.3.7
+langchain-openai==0.2.6
+langchain-community==0.3.7
+langchain-text-splitters==0.3.11
+
+chromadb==0.5.5
