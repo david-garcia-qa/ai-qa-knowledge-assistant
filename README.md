@@ -54,6 +54,7 @@ ai-qa-knowledge-assistant/
 │   ├── retriever.py        # Perform semantic search
 │   └── answerer.py         # Generate final answer
 ├── app.py                  # CLI entry point
+├── streamlit_app.py        # Streamlit web UI
 ├── .env.example            # API key / model config template
 ├── requirements.txt
 └── LICENSE
@@ -88,17 +89,108 @@ Sources:
 - audit_requirements.md (traceability / auditability)
 ```
 
-## 🔍 Why this matters for QA
-- Faster onboarding: new testers can ask questions instead of reading 80 pages of specs.
-- Test design quality: QA can confirm rules (timeouts, lockouts, retry limits) before writing scenarios.
-- Compliance & audit: makes it easy to prove what is "mandatory" vs "nice to have".
-- Release confidence: security blockers are no longer tribal knowledge.
+## ⚡ Live demo (Streamlit UI)
+
+This project includes a lightweight Streamlit app that exposes the QA Assistant as an interactive UI.
+
+You can:
+- Ask questions in plain English (e.g. "What happens after 3 failed login attempts?")
+- Get an action-focused QA answer
+- See which documentation sources were used (traceability / audit)
+- Run it locally **or** deploy it publicly
+
+---
+
+### 🖥 Run the UI locally
+
+1. Install dependencies (if not already done):
+```bash
+pip install -r requirements.txt
+```
+
+2. Create a `.env` file at the project root:
+```text
+OPENAI_API_KEY=sk-your-real-openai-api-key
+MODEL_NAME=gpt-4o-mini
+EMBEDDING_MODEL=text-embedding-3-small
+```
+
+3. Run the Streamlit app:
+```bash
+streamlit run streamlit_app.py
+```
+
+4. Open the browser at:
+```
+http://localhost:8501
+```
+
+You’ll get:
+- A text box to ask QA questions
+- The generated answer
+- The list of source documents used (e.g. specs_mfa.md, audit_requirements.md)
+
+---
+
+### ☁ Deploy on Streamlit Cloud (free)
+
+You can deploy this app publicly using Streamlit Cloud, directly from this repository.
+
+1. Push this repository to GitHub (public or private).
+2. Go to Streamlit Cloud and create a new app:
+   - Repo: `your-username/ai-qa-knowledge-assistant`
+   - Entry point: `streamlit_app.py`
+3. In Streamlit Cloud, go to:
+   **Manage app → Secrets**
+
+4. Add the following secrets (no quotes around the keys, quotes around the values):
+```toml
+OPENAI_API_KEY = "sk-your-openai-key"
+MODEL_NAME = "gpt-4o-mini"
+EMBEDDING_MODEL = "text-embedding-3-small"
+```
+
+These values are injected as environment variables.  
+They are **not committed** to GitHub.
+
+5. Save. Streamlit will rebuild and launch your app.
+
+Now anyone with the link can ask:
+> "What are the security requirements for MFA login?"
+
+…and get:
+- Lockout rules
+- OTP expiry rules
+- Audit obligations
+- Plus a “Sources:” section to prove where the answer came from
+
+---
+
+### 🔒 Security note
+
+- `OPENAI_API_KEY` is never stored in the repo.
+- `.env` is in `.gitignore`.
+- On Streamlit Cloud, secrets are stored in the app settings, not in code.
+- The vector store (`chroma_store/`) is ignored as well, because it’s a local cache of embeddings and can be rebuilt at startup.
+
+---
+
+### ✅ What this demonstrates
+
+This UI shows how QA can:
+- Query product requirements, security rules, and audit constraints without reading all the docs
+- Get actionable, testable statements (“lockout is 15 minutes”, “log every attempt with timestamp”)
+- Trace back every answer to specific source files
+
+In other words:
+**This is an AI-assisted QA knowledge base powered by Retrieval-Augmented Generation (RAG), delivered as a self-serve tool for testers, auditors, and release managers.**
 
 ## 🛠 Tech stack
 - Python
 - LangChain
+- LangChain-OpenAI
 - ChromaDB (local vector store)
-- OpenAI GPT models (you can swap to any other LLM provider)
+- Streamlit (interactive UI)
 - dotenv for secret management
 
 ## 📜 License
