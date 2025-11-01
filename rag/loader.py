@@ -1,6 +1,6 @@
 import os
 from pathlib import Path
-from langchain.text_splitter import RecursiveCharacterTextSplitter
+from langchain_text_splitters import RecursiveCharacterTextSplitter
 
 def load_documents(data_dir: str = "data"):
     """
@@ -34,3 +34,4 @@ def split_documents(docs, chunk_size=600, chunk_overlap=100):
                 "text": chunk.strip()
             })
     return chunks
+
