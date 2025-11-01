@@ -1,4 +1,7 @@
 # 🧠 AI QA Knowledge Assistant
+
+**[🚀 Live Demo on Streamlit Cloud](https://ai-app-knowledge-assistant-xxmb5duhvezyrv2pcoors8.streamlit.app/)**  
+
 RAG-powered assistant for QA teams. Ask questions about product rules, security requirements, and compliance obligations — get concise answers with source citations.
 
 ## 🌍 What this project does
@@ -163,6 +166,11 @@ Now anyone with the link can ask:
 - OTP expiry rules
 - Audit obligations
 - Plus a “Sources:” section to prove where the answer came from
+
+---
+
+### 🔗 **Try it live:**  
+[https://ai-app-knowledge-assistant-xxmb5duhvezyrv2pcoors8.streamlit.app/](https://ai-app-knowledge-assistant-xxmb5duhvezyrv2pcoors8.streamlit.app/)
 
 ---
 
